@@ -1,0 +1,36 @@
+{
+    "name": "academe/laravel-contextual-notes",
+    "description": "Laravel Contextual Model Notes for Laravel",
+    "homepage": "https://github.com/academe",
+    "keywords": ["laravel", "notes", "note", "polymorphic"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jason Judge",
+            "email": "judgej@gmail.com",
+            "homepage": "https://github.com/judgej"
+        }
+    ],
+    "require": {
+        "laravel/framework": "~5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "squizlabs/php_codesniffer": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Academe\\Laravel\\ContextualNotes\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Academe\\Laravel\\ContextualNotes\\ServiceProvider"
+            ],
+            "aliases": {
+                "AcademeContextualNotes": "Academe\\Laravel\\ContextualNotes\\Facade"
+            }
+        }
+    }
+}

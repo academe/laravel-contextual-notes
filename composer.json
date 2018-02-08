@@ -1,6 +1,6 @@
 {
     "name": "academe/laravel-contextual-notes",
-    "description": "Laravel Contextual Model Notes for Laravel",
+    "description": "Contextual Model Notes for Laravel",
     "homepage": "https://github.com/academe",
     "keywords": ["laravel", "notes", "note", "polymorphic"],
     "license": "MIT",

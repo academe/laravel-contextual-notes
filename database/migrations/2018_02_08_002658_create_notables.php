@@ -20,8 +20,22 @@ class CreateNotables extends Migration
             $table->timestamps();
 
             $table->bigInteger('note_id')->unsigned();
+
+            // Q: Can these two be replaced by $table->morphs('noteable')?
+            // A: No, because that does not use bigInteger.
             $table->bigInteger('notable_id')->unsigned();
             $table->string('notable_type', 255);
+
+            // Optional relationship with author (to be completed).
+            $table->bigInteger('author_id')->unsigned()->nullable();
+
+            $table->foreign('note_id')
+                ->references('id')
+                ->on(config('academe-contextual-notes.notes.table', 'notes'))
+                ->onDelete('cascade');
+
+            // Other indexes.
+            $table->index(['notable_id', 'notable_type']);
         });
     }
 

@@ -24,7 +24,7 @@ class CreateNotables extends Migration
             // Q: Can these two be replaced by $table->morphs('noteable')?
             // A: No, because that does not use bigInteger.
             $table->bigInteger('notable_id')->unsigned();
-            $table->string('notable_type', 255);
+            $table->string('notable_type');
 
             // Optional relationship with author (to be completed).
             $table->bigInteger('author_id')->unsigned()->nullable();

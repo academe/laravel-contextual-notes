@@ -4,15 +4,21 @@ namespace Academe\Laravel\ContextualNotes\Models;
 
 /**
  * TODO: author
- * TODO: severity
+ * TODO: severity/level
  */
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Note extends Model
 {
     protected $fillable = [
+        'level',
         'message',
+    ];
+
+    protected $attributes = [
+        'message' => '',
     ];
 
     public function getTable()
@@ -21,48 +27,73 @@ class Note extends Model
     }
 
     /**
+     * Relationship.
+     */
+    public function models($model)
+    {
+        return $this->morphedByMany(
+            $model instanceof Model ? get_class($model) : $model,
+            'notable',
+            config('academe-contextual-notes.notables.table', 'notables')
+        );
+    }
+
+    /**
      * Add this note to a single model.
      *
      * @param Model $model any eloquent mndel
      * @return TBC
      */
-    public function addToModel(Model $model)
+    public function attachModel(Model $model)
     {
-        return $this->morphedByMany(
-            $model,
-            'notable',
-            config('academe-contextual-notes.notables.table', 'notables')
-        )->save($model);
+        return $this->models($model)->save($model);
     }
 
     /**
      * Add this note to a list of models.
-     * TODO: more flexibility of the types of lists that can be provided
+     * TODO: more flexibility of the types of lists that can be provided, or
+     * even support varidiac (?) parameters.
      *
      * @param array $models eloquent mndels, of the same or different types
-     * @return null
+     * @return self
      */
-    public function addToModels(array $models)
+    public function attach($models)
     {
-        foreach ($models as $model) {
-            $this->addToModel($model);
+        if (! is_array($models) && ! $models instanceof \Traversable) {
+            $models = [$models];
         }
+
+        foreach ($models as $model) {
+            if ($model instanceof Model) {
+                $this->attachModel($model);
+            }
+        }
+
+        return $this;
     }
 
+    /**
+     * Reverse relationship, defined by config.
+     */
     public function __call($method, $arguments)
     {
-        // Just trying this out.
-        // The method name and model mapping would be set by configuration.
-        // The same functionaility would be in the __get() magic method too.
+        $mapping = config('academe-contextual-notes.models', []);
 
-        if ($method === 'bankTransactions') {
+        if (array_key_exists($method, $mapping)) {
             return $this->morphedByMany(
-                'Consilience\Bluejay\Ledger\Models\BankTransaction',
+                $mapping[$method],
                 'notable',
                 config('academe-contextual-notes.notables.table', 'notables')
             );
         }
 
         return parent::__call($method, $arguments);
+    }
+
+    /**
+     * Write a log entry for this note, to the default log.
+     */
+    public function withLog()
+    {
     }
 }

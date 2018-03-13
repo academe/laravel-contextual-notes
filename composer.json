@@ -29,7 +29,7 @@
                 "Academe\\Laravel\\ContextualNotes\\ServiceProvider"
             ],
             "aliases": {
-                "AcademeContextualNotes": "Academe\\Laravel\\ContextualNotes\\Facade"
+                "ContextualNotes": "Academe\\Laravel\\ContextualNotes\\Facade"
             }
         }
     }

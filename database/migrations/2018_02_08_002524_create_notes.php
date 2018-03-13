@@ -19,8 +19,11 @@ class CreateNotes extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
 
+            // Note level.
+            $table->string('level', 60)->nullable();
+
             // Just a simple message for now.
-            $table->string('message', 255);
+            $table->text('message');
         });
     }
 

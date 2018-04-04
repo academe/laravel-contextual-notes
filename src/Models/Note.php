@@ -8,6 +8,7 @@ namespace Academe\Laravel\ContextualNotes\Models;
  */
 
 use Illuminate\Database\Eloquent\Model;
+use Traversable;
 use Log;
 
 class Note extends Model
@@ -42,7 +43,7 @@ class Note extends Model
      * Add this note to a single model.
      *
      * @param Model $model any eloquent mndel
-     * @return TBC
+     * @return bool
      */
     public function attachModel(Model $model)
     {
@@ -51,15 +52,13 @@ class Note extends Model
 
     /**
      * Add this note to a list of models.
-     * TODO: more flexibility of the types of lists that can be provided, or
-     * even support varidiac (?) parameters.
      *
-     * @param array $models eloquent mndels, of the same or different types
+     * @param array|Traversable $models eloquent mndels, of the same or different types
      * @return self
      */
     public function attach($models)
     {
-        if (! is_array($models) && ! $models instanceof \Traversable) {
+        if (! is_array($models) && ! $models instanceof Traversable) {
             $models = [$models];
         }
 
@@ -91,7 +90,7 @@ class Note extends Model
     }
 
     /**
-     * Write a log entry for this note, to the default log.
+     * TODO: Write a log entry for this note, to the default log.
      */
     public function withLog()
     {

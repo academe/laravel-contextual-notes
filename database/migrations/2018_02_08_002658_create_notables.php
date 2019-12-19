@@ -17,7 +17,7 @@ class CreateNotables extends Migration
 
         Schema::create($tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->timestamps(6);
 
             $table->bigInteger('note_id')->unsigned();
 

@@ -17,7 +17,7 @@ class CreateNotes extends Migration
 
         Schema::create($tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->timestamps(6);
 
             // Note level.
             $table->string('level', 60)->nullable();

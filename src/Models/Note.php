@@ -13,6 +13,10 @@ use Log;
 
 class Note extends Model
 {
+    // Needed to support microtime on MySQL.
+
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     protected $fillable = [
         'level',
         'message',
